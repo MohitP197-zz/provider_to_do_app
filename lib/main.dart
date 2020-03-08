@@ -75,44 +75,51 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.white,
               ),
               child: ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: ListTile(
-                        contentPadding: EdgeInsets.only(
-                          left: 32,
-                          top: 8,
-                          bottom: 8,
-                        ),
-                        title: Text(
-                          "Build new app",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Build a new app on flutter',
-                          style: TextStyle(
-                            color: Colors.black45,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: Icon(
-                          Icons.check_circle,
-                          color: Colors.greenAccent,
-                        ),
-                      ),
-                      margin: EdgeInsets.only(
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return Container(
+                    child: ListTile(
+                      contentPadding: EdgeInsets.only(
+                        left: 32,
+                        top: 8,
                         bottom: 8,
-                        left: 16,
-                        right: 40,
                       ),
-                    );
-                  }),
+                      title: Text(
+                        "Build new app",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Build a new app on flutter',
+                        style: TextStyle(
+                          color: Colors.black45,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.check_circle,
+                        color: Colors.greenAccent,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(
+                      bottom: 8,
+                      left: 16,
+                      right: 40,
+                    ),
+                  );
+                },
+              ),
             ),
-          )
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+        ),
+        onPressed: () {},
       ),
     );
   }
