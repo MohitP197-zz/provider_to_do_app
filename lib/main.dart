@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/Models/TodoModel.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +13,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: ChangeNotifierProvider(
+        builder: (context) => TodoModel(),
+        child: MyHomePage(),
+      ),
     );
   }
 }
@@ -67,51 +72,56 @@ class MyHomePage extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50),
-                  topLeft: Radius.circular(60),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(50),
+                    topLeft: Radius.circular(60),
+                  ),
+                  color: Colors.white,
                 ),
-                color: Colors.white,
-              ),
-              child: ListView.builder(
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  return Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.only(
-                        left: 32,
-                        top: 8,
-                        bottom: 8,
-                      ),
-                      title: Text(
-                        "Build new app",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                        'Build a new app on flutter',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.check_circle,
-                        color: Colors.greenAccent,
-                      ),
-                    ),
-                    margin: EdgeInsets.only(
-                      bottom: 8,
-                      left: 16,
-                      right: 40,
-                    ),
-                  );
-                },
-              ),
-            ),
+                // Observes the changes is the change notifier
+                // todo is the latest todo instance
+                child: Consumer<TodoModel>(
+                  builder: (context, todo, child) {
+                    return ListView.builder(
+                      itemCount: todo.taskList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 32,
+                              top: 8,
+                              bottom: 8,
+                            ),
+                            title: Text(
+                              todo.taskList[index].title,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              todo.taskList[index].detail,
+                              style: TextStyle(
+                                color: Colors.black45,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.check_circle,
+                              color: Colors.greenAccent,
+                            ),
+                          ),
+                          margin: EdgeInsets.only(
+                            bottom: 8,
+                            left: 16,
+                            right: 40,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                )),
           ),
         ],
       ),
@@ -119,7 +129,9 @@ class MyHomePage extends StatelessWidget {
         child: Icon(
           Icons.add,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Provider.of<TodoModel>(context).addTaskInList();
+        },
       ),
     );
   }
